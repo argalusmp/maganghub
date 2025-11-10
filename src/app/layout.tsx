@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
@@ -22,7 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={`${fontSans.variable} bg-zinc-950 text-zinc-50 antialiased`}>
         <QueryProvider>
           <div className="flex min-h-screen flex-col">
-            <SiteHeader />
+            <Suspense fallback={<div className="h-20 bg-zinc-950" />}>
+              <SiteHeader />
+            </Suspense>
             <main className="flex-1 bg-gradient-to-b from-zinc-950 via-zinc-950 to-zinc-900">
               {children}
             </main>
