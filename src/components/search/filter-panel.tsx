@@ -24,6 +24,7 @@ interface FilterPanelProps {
   programOptions: string[];
   provincesLoading?: boolean;
   kabupatenLoading?: boolean;
+  onSubmit?: () => void;
 }
 
 export function FilterPanel(props: FilterPanelProps) {
@@ -34,9 +35,7 @@ export function FilterPanel(props: FilterPanelProps) {
       <div className="hidden lg:block">
         <FiltersContent {...props} />
       </div>
-      <MobileDrawer>
-        <FiltersContent {...props} />
-      </MobileDrawer>
+      <MobileDrawer {...props} />
     </div>
   );
 }
@@ -53,6 +52,7 @@ function FiltersContent({
   programOptions,
   provincesLoading,
   kabupatenLoading,
+  onSubmit,
 }: FiltersContentProps) {
   // Local state HANYA untuk input yang sedang diketik
   const [searchInput, setSearchInput] = useState(filters.q);
@@ -80,6 +80,7 @@ function FiltersContent({
     if (searchInput.trim() !== filters.q) {
       onChange({ q: searchInput.trim() });
     }
+    onSubmit?.();
   };
 
   return (
@@ -310,7 +311,7 @@ function FiltersContent({
   );
 }
 
-function MobileDrawer({ children }: { children: React.ReactNode }) {
+function MobileDrawer(props: FiltersContentProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -341,7 +342,7 @@ function MobileDrawer({ children }: { children: React.ReactNode }) {
               </Button>
             </div>
             <div className="mt-4 max-h-[70vh] overflow-y-auto pr-2">
-              {children}
+              <FiltersContent {...props} onSubmit={() => setOpen(false)} />
             </div>
           </div>
         </div>
