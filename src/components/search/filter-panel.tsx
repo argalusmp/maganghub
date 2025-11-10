@@ -115,6 +115,15 @@ function FiltersContent({
           <p className="text-xs text-zinc-500">
             Tekan Enter untuk mencari
           </p>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="w-full lg:hidden"
+            onClick={handleKeywordSubmit}
+          >
+            Cari
+          </Button>
         </div>
       </section>
 
