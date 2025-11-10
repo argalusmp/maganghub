@@ -5,7 +5,7 @@ import { io, type Socket } from "socket.io-client";
 import { AnimatePresence, motion } from "framer-motion";
 
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET_URL ?? "http://localhost:3000";
-const HIDE_DELAY_MS = 7000;
+const HIDE_DELAY_MS = 30000;
 
 interface DonationAlertPayload {
   donator_name: string;
