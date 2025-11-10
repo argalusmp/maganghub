@@ -10,7 +10,7 @@ type FetchOptions = RequestInit & {
 
 async function apiFetch<T>(path: string, { cacheSeconds, ...init }: FetchOptions = {}): Promise<T> {
   const url = `${API_BASE_URL}${path}`;
-  const requestInit: RequestInit & { next?: { revalidate?: number } } = {
+  const requestInit = {
     ...init,
   };
 
@@ -18,7 +18,7 @@ async function apiFetch<T>(path: string, { cacheSeconds, ...init }: FetchOptions
 
   if (isServer) {
     if (cacheSeconds) {
-      requestInit.next = { revalidate: cacheSeconds };
+      (requestInit as any).next = { revalidate: cacheSeconds };
     } else {
       requestInit.cache = "no-store";
     }
