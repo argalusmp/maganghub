@@ -48,13 +48,13 @@ describe("filters serialization", () => {
     const result = normalizeFilters({
       ...defaultFilters,
       jenjang: ["Diploma", "Invalid"],
-      prodi: ["Informatika", "Informatika", "  "],
+      prodi: ["Teknik Informatika", "teknik informatika", "  "],
       page: -1,
       limit: 200,
     });
 
     expect(result.jenjang).toEqual(["Diploma"]);
-    expect(result.prodi).toEqual(["Informatika"]);
+    expect(result.prodi).toEqual(["Teknik Informatika"]);
     expect(result.page).toBe(1);
     expect(result.limit).toBe(100);
   });

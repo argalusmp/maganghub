@@ -57,6 +57,8 @@ function FiltersContent({
   // Local state HANYA untuk input yang sedang diketik
   const [searchInput, setSearchInput] = useState(filters.q);
   const [programSearch, setProgramSearch] = useState("");
+  const debouncedKeyword = useDebouncedValue(searchInput, 400);
+  const normalizedKeyword = debouncedKeyword.trim();
   
   const keywordId = useId();
   const provinceId = useId();
@@ -70,6 +72,11 @@ function FiltersContent({
       setSearchInput(filters.q);
     }
   }, [filters.q]); // Sengaja tidak include searchInput untuk avoid loop
+
+  useEffect(() => {
+    if (normalizedKeyword === filters.q) return;
+    onChange({ q: normalizedKeyword });
+  }, [normalizedKeyword, filters.q, onChange]);
   
   const filteredPrograms = useMemo(() => {
     if (!programSearch) return programOptions;
@@ -114,7 +121,7 @@ function FiltersContent({
             autoComplete="off"
           />
           <p className="text-xs text-zinc-500">
-            Tekan Enter untuk mencari
+            Pencarian diperbarui otomatis setelah kamu berhenti mengetik
           </p>
           <Button
             type="button"

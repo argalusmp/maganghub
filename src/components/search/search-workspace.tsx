@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { FilterPanel } from "@/components/search/filter-panel";
 import { SearchResults } from "@/components/search/results-area";
 import { computeJenjangPreview } from "@/lib/format";
+import { buildProgramOptionsFromVacancies } from "@/lib/programs";
 import { useFilterParams } from "@/hooks/use-filter-params";
 import { useKabupatenQuery, useProvincesQuery, useSearchData } from "@/hooks/use-search-data";
 
@@ -16,13 +17,10 @@ export function SearchWorkspace() {
 
   const jenjangPreview = useMemo(() => computeJenjangPreview(searchQuery.data?.data ?? []), [searchQuery.data]);
 
-  const programOptions = useMemo(() => {
-    const set = new Set<string>();
-    searchQuery.data?.data.forEach((vacancy) => {
-      vacancy.program_studi.forEach((program) => set.add(program));
-    });
-    return Array.from(set).sort((a, b) => a.localeCompare(b, "id"));
-  }, [searchQuery.data]);
+  const programOptions = useMemo(
+    () => buildProgramOptionsFromVacancies(searchQuery.data?.data ?? []),
+    [searchQuery.data]
+  );
 
   return (
     <section id="cari" className="mx-auto mt-10 w-full max-w-7xl px-4 pb-16 md:px-6 lg:px-8">

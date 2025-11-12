@@ -37,7 +37,7 @@ export function LandingHero({ totalVacancies, newCount }: LandingHeroProps) {
             className="bg-gradient-to-r from-amber-300 via-orange-400 to-rose-500 text-zinc-900 shadow-lg shadow-orange-500/40 transition hover:scale-[1.02] hover:shadow-rose-400/50"
           >
             <Link href="https://saweria.co/vidiaja" target="_blank" rel="noreferrer">
-              Buat ngopi ☕✨
+              Buat Jajan ☕✨
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

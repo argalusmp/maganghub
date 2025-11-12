@@ -1,4 +1,5 @@
 import { DEFAULT_LIMIT, JENJANG_OPTIONS, SORT_OPTIONS } from "@/lib/constants";
+import { canonicalizeProgramLabel } from "@/lib/programs";
 
 export type VacancyStatus = "all" | "open" | "closed";
 export type SortValue = (typeof SORT_OPTIONS)[number]["value"];
@@ -88,10 +89,12 @@ export function sanitizeJenjang(values: string[]) {
 }
 
 export function normalizeFilters(filters: SearchFilters): SearchFilters {
+  const normalizedProdi = filters.prodi.map(canonicalizeProgramLabel).filter(Boolean);
+
   return {
     ...filters,
     jenjang: sanitizeJenjang(filters.jenjang),
-    prodi: Array.from(new Set(filters.prodi.map((val) => val.trim()).filter(Boolean))),
+    prodi: Array.from(new Set(normalizedProdi)),
     page: Math.max(1, filters.page),
     limit: Math.min(100, Math.max(1, filters.limit)),
   };
